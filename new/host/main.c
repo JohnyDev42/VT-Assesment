@@ -61,6 +61,18 @@ int main(int argc, char *argv[])
 //      printf("Enter the Size of Stack:");
 //      scanf("%d",&a);
 //      struct queue * que=createQ(a);
+	/* Clear the TEEC_Operation struct */
+	memset(&op, 0, sizeof(op));
+
+	/*
+	 * Prepare the argument. Pass a value in the first parameter,
+	 * the remaining three parameters are unused.
+	 */
+
+	op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_INOUT, TEEC_VALUE_INOUT,
+					 TEEC_NONE, TEEC_NONE);
+	op.params[0].memref.buffer = 9;
+	op.params[1].memref.size = 12;
         int x,y;
         struct stack * st1=createStack(5);
         struct stack * st2=createStack(5);
@@ -72,7 +84,13 @@ begin:
         {
                 case 1:printf("Data?");
                         scanf("%d",&a);
-                        if(isFullS(st1)==1)
+			op.params[0].value.a = a;
+			res = TEEC_InvokeCommand(&sess, TA_FULL, &op,
+				 &err_origin);
+			if (res != TEEC_SUCCESS)
+			errx(1, "TEEC_InvokeCommand failed with code 0x%x origin 0x%x",
+			res, err_origin);                        
+		//	if(isFullS(st1)==1)
                                 printf("Stack is Full\n");
                         push(st1,a);
                         goto begin;
@@ -103,30 +121,10 @@ begin:
 	 * interpreted is part of the interface provided by the TA.
 	 */
 
-	/* Clear the TEEC_Operation struct */
-	memset(&op, 0, sizeof(op));
+	
 
-	/*
-	 * Prepare the argument. Pass a value in the first parameter,
-	 * the remaining three parameters are unused.
-	 */
-
-	op.paramTypes = TEEC_PARAM_TYPES(TEEC_MEMREF_INOUT, TEEC_VALUE_INOUT,
-					 TEEC_NONE, TEEC_NONE);
-	op.params[0].memref.buffer = 9;
-	op.params[1].memref.size = 12;
-
-	/*
-	 * TA_HELLO_WORLD_CMD_INC_VALUE is the actual function in the TA to be
-	 * called.
-	 */
-//	printf("Invoking TA to increment %d\n", op.params[0].value.a);
-	res = TEEC_InvokeCommand(&sess, TA_GCD, &op,
-				 &err_origin);
-	if (res != TEEC_SUCCESS)
-		errx(1, "TEEC_InvokeCommand failed with code 0x%x origin 0x%x",
-			res, err_origin);
-	printf("GCD is  %d\n", op.params[2].value.a);
+	
+//	printf("GCD is  %d\n", op.params[2].value.a);
 
 	/*
 	 * We're done with the TA, close the session and
