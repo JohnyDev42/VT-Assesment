@@ -1,0 +1,21 @@
+#!/bin/bash
+
+TIME=$(date "+%H")
+
+#NAME=ARUN
+if [ $TIME -lt 12 ] ; then
+	tput blink
+	tput bold
+	tput setaf 2
+	echo Good Morning, $NAME
+	tput sgr0
+elif [ $TIME -lt 18 ]; then
+	tput blink
+	tput bold
+	tput setaf 5
+	echo Good Afternoon, $NAME
+	tput sgr0
+else
+	echo Good Evening, $NAME
+fi
+

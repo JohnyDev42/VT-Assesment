@@ -30,6 +30,42 @@
 
 #include <hello_world_ta.h>
 
+#include "../inc/templete.h"
+struct stack * createStack(unsigned cap)
+{
+	struct stack * new=(struct stack*)malloc(sizeof(struct stack));
+	new->top=-1;
+	new->capacity=cap;
+	new->arr=(int *)malloc((new->capacity)*sizeof(int));
+	return new;
+}
+int isEmptyS(struct stack *stack)
+{
+	return stack->top==-1;
+}
+int isFullS(struct stack *stack1)
+{
+	return stack1->capacity-1==stack1->top;
+}
+void push(struct stack * stack1,int data)
+{
+	if(isFullS(stack1))
+	{
+		printf("Stack is Full\n");
+		return;
+	}
+	stack1->arr[++stack1->top]=data;	
+}
+int peek(struct stack * st)
+{
+	return st->arr[st->top];
+}
+int pop(struct stack * st)
+{
+	if(isEmptyS(st))
+		return -1;
+	return st->arr[st->top--];
+}
 /*
  * Called when the instance of the TA is created. This is the first call in
  * the TA.
@@ -113,18 +149,7 @@ static TEE_Result inc_value(uint32_t param_types,
 
 	return TEE_SUCCESS;
 }
-int gcd_rec(int a,int b)
-{
-	if(b !=0)
-		gcd_rec(a,a%b);
-	else
-	{
-		if(a<0)
-			a=-a;
-		return a;
-	}
 
-}
 static TEE_Result gcd(uint32_t param_types,TEE_Param params[4])
 {
 	uint32_t exp_param_types =TEE_PARAM_TYPES(TEE_PARAM_TYPE_VALUE_INOUT,
@@ -140,7 +165,7 @@ static TEE_Result gcd(uint32_t param_types,TEE_Param params[4])
 }
 
 
-static TEE_Result dec_value(uint32_t param_types,
+static TEE_Result FULL(uint32_t param_types,
 	TEE_Param params[4])
 {
 	uint32_t exp_param_types = TEE_PARAM_TYPES(TEE_PARAM_TYPE_VALUE_INOUT,
@@ -156,6 +181,25 @@ static TEE_Result dec_value(uint32_t param_types,
 	IMSG("Got value: %u from NW", params[0].value.a);
 	params[0].value.a--;
 	IMSG("Decrease value to: %u", params[0].value.a);
+
+	return TEE_SUCCESS;
+}
+static TEE_Result createSt(uint32_t param_types,
+	TEE_Param params[4])
+{
+	uint32_t exp_param_types = TEE_PARAM_TYPES(TEE_PARAM_TYPE_MEMREF_INOUT,
+						   TEE_PARAM_TYPE_VALUE_INOUT,
+						   TEE_PARAM_TYPE_NONE,
+						   TEE_PARAM_TYPE_NONE);
+
+	DMSG("has been called");
+
+	if (param_types != exp_param_types)
+		return TEE_ERROR_BAD_PARAMETERS;
+	params.memref = createStack(params[0].value.a)
+//	IMSG("Got value: %u from NW", params[0].value.a);
+//	params[0].value.a--;
+//	IMSG("Decrease value to: %u", params[0].value.a);
 
 	return TEE_SUCCESS;
 }
