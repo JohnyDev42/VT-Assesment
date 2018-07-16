@@ -1,0 +1,31 @@
+sessitra@VTA010L:~$ python
+Python 2.7.12 (default, Dec  4 2017, 14:50:18) 
+[GCC 5.4.0 20160609] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import arith
+>>> arith.my_add(9,2)
+11
+>>> arith.my_diff(9,2)
+7
+>>> dir(arith)
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'my_add', 'my_diff']
+>>> import arith
+>>> dir(arith)
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'my_add', 'my_diff']
+>>> reload(arith)
+<module 'arith' from 'arith.py'>
+>>> import arith
+>>> dir(arith)
+['__builtins__', '__doc__', '__file__', '__name__', '__package__', 'my_add', 'my_diff', 'my_multi']
+>>> arith.my_multi(1,2)
+2
+>>> quit()
+sessitra@VTA010L:~$ pwd
+/home/sessitra
+sessitra@VTA010L:~$ cd sample100
+sessitra@VTA010L:~/sample100$ pwd
+/home/sessitra/sample100
+sessitra@VTA010L:~/sample100$ ls
+arith.py
+sessitra@VTA010L:~/sample100$ 
+
