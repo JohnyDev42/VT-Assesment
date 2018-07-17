@@ -1,0 +1,9 @@
+***Assumptions***
+
+Lets take 5 nodes,Insert data.
+
+Print the list using head node 
+
+swap any node with the next node using the node address
+
+delete a node using its address
