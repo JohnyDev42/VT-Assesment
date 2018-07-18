@@ -1,0 +1,12 @@
+#ifndef TA_EXAMPLE_H
+#define TA_EXAMPLE_H
+
+
+#define TA_TEST_UUID \
+        { 0x8aaaf200, 0x2450, 0x11e4, \
+                { 0xab, 0xe2, 0x00, 0x02, 0xa5, 0xd5, 0xc5, 0x2b} }
+
+#define TA_TEST_CMD_ID 		5
+
+
+#endif
