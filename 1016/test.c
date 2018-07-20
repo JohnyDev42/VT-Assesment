@@ -36,7 +36,7 @@ void print_LL(node * root)
 	node *temp=root;
 	while(temp !=NULL)
 	{
-		printf("%d ",temp->data);
+		printf("%p  %d \n",temp,temp->data);
 		temp=temp->next;
 	}
 	printf("\n");
@@ -51,7 +51,6 @@ void swap_node(node * ptr)
 	node *nntmp = ptr->next_next;	
 	node * nptr;
 	node * nnptr;
-	printf("nptr=%p\n",ntmp);
 	if(ptr->next==NULL)
 	{
 		printf("Next node not Available\n");
@@ -68,24 +67,18 @@ void swap_node(node * ptr)
 		return;
 	}
 	
-		while(temp->next == ptr)
+		while(temp->next != ptr)
 		{
+		temp=temp->next;
+		}
+		
 		temp->next= tmp->next;
 		temp->next_next = tmp;
-		ptr->next->next = ptr;
-		ptr->next->next_next = ptr->next_next;
-	//	ptr->next = tmp->next->next;
-	//	ptr->next_next = tmp->next->next_next;
+		temp->next->next = tmp;
+		temp->next->next_next = tmp->next->next;
+		tmp->next=tmp->next_next;
+		tmp->next_next = tmp->next->next;
 		
-	//	tmp->next = tmp->next->next;
-	//	tmp->next_next = tmp->next->next_next->next;
-	//	ntmp->next = tmp;
-	//	ntmp->next_next = ntmp->next;
-	//	ptr->next_next = ptr->next->next_next;
-	//	ptr->next=ptr->next->next;
-		
-	//	temp=temp->next;
-		}
 	
 	
 	
@@ -131,7 +124,7 @@ int main()
 	print_LL(head);
 	printf("%d\n",head->next_next->next->data);
 	printf("After swapping:\n");
-	swap_node(head->next);
+	swap_node(head->next_next);
 	print_LL(head);
 	printf("Deleting 4th node\n");
 	delete_node(head->next->next->next);
