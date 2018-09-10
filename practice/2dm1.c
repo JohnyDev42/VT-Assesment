@@ -8,12 +8,13 @@ int main()
 		ptr[i]=(int*)malloc(sizeof(int)*c);
 	for(i=0;i<r;i++)
 		for(j=0;j<c;j++)
-			ptr[i][j]=count++;
+//			ptr[i][j]=count++;
+			*(*(ptr+i)+j)=count++;
 	for(i=0;i<r;i++)
 		for(j=0;j<c;j++)
 			printf("%d ",ptr[i][j]);
 	
-
+	printf("size:%lu\n",((ptr+1)-ptr));
 	printf("ptr[0]=%p\n",ptr[0]);
 	for(i=0;i<r;i++)
 		free(ptr[i]);

@@ -1,3 +1,3 @@
 all:main.o
 main.o:
-	gcc -c main.c
+	gcc -fPIC -c main.c
